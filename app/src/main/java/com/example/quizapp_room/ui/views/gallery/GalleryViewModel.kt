@@ -18,6 +18,12 @@ class GalleryViewModel(private val repository: QuizRepository) : ViewModel(){
     private val isAscending = MutableStateFlow(true)
 
 
+    /**
+     * A stream of all quiz items, combined with the current sorting order.
+     * - [combine]: Automatically re-sorts whenever the database or [isAscending] changes.
+     * - [stateIn]: Converts the Flow into a StateFlow for the UI, keeping it active for
+     *   5 seconds after the last subscriber leaves to handle configuration changes (like rotation).
+     */
     val allItems: StateFlow<List<QuizItem>> = repository.getAllQuizItems()
         .combine(
             isAscending
