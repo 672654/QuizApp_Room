@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.quizapp_room.data.QuizItem
+import com.example.quizapp_room.ui.components.QuizDone
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,6 +45,8 @@ fun QuizScreen(
     isAnswered: Boolean,
     onSubmitAnswer: (String) -> Unit,
     score: Int,
+    notEnoughQuizItems: Boolean,
+    isQuizDone: Boolean,
     onRestart: () -> Unit,
     onNextQuestion: () -> Unit
     ) {
@@ -79,14 +82,28 @@ fun QuizScreen(
                 .padding(paddingValues)
                 .verticalScroll(scrollState)
         ) {
-            if (currentQuizItem != null) {
-                QuizCard(
-                    quizItem = currentQuizItem,
-                    quizAnswers = quizAnswers,
-                    isAnswered = isAnswered,
-                    onSubmitAnswer = onSubmitAnswer,
-                    onNextQuestion = onNextQuestion
-                )
+            if (notEnoughQuizItems){
+                Text(
+                    text = "Need at least 3 quiz items to start quiz")
+
+            } else {
+                if (isQuizDone){
+                    QuizDone(
+                        onRestart = onRestart,
+                        score = score,
+                        onExit = { navController.navigate("home") }
+                    )
+                } else {
+                    if (currentQuizItem != null) {
+                        QuizCard(
+                            quizItem = currentQuizItem,
+                            quizAnswers = quizAnswers,
+                            isAnswered = isAnswered,
+                            onSubmitAnswer = onSubmitAnswer,
+                            onNextQuestion = onNextQuestion
+                        )
+                    }
+                }
             }
 
         }
@@ -179,3 +196,4 @@ fun QuizCard(
     }
 
 }
+

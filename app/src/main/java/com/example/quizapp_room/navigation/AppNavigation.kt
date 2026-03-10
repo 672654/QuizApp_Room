@@ -1,8 +1,10 @@
 package com.example.quizapp_room.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalGraphicsContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -42,6 +44,8 @@ fun AppNavigation() {
                 isAnswered = quizViewModel.isAnswered,
                 onSubmitAnswer = { quizViewModel.checkAnswer(it) },
                 score = quizViewModel.score,
+                notEnoughQuizItems = quizViewModel.notEnoughQuizItems,
+                isQuizDone = quizViewModel.isQuizDone,
                 onRestart = { quizViewModel.startNewQuiz() },
                 onNextQuestion = {quizViewModel.loadNextQuestion()}
             )

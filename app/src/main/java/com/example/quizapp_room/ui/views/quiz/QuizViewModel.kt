@@ -13,6 +13,7 @@ import com.example.quizapp_room.data.QuizRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -22,6 +23,9 @@ class QuizViewModel(private val repository: QuizRepository) : ViewModel() {
     private val remainingQuizItems = mutableStateListOf<QuizItem>()
 
     var notEnoughQuizItems by mutableStateOf(false)
+
+    var isQuizDone by mutableStateOf(false)
+
 
     var isAnswered by mutableStateOf(false)
 
@@ -40,23 +44,28 @@ class QuizViewModel(private val repository: QuizRepository) : ViewModel() {
 
     private fun loadData() {
         viewModelScope.launch {
-            val items = repository.getAllQuizItems().first()
-            if (items.count() < 3) {
-                notEnoughQuizItems = true
+            repository.getAllQuizItems().collect() {
+                items ->
+                allQuizItems.clear()
+                allQuizItems.addAll(items)
+                if(items.size < 3) {
+                    notEnoughQuizItems = true
+                } else {
+                    notEnoughQuizItems = false
+                }
+                startNewQuiz()
             }
-            allQuizItems.clear()
-            allQuizItems.addAll(items)
-            startNewQuiz()
+
         }
     }
 
     fun startNewQuiz() {
-        notEnoughQuizItems = false
         remainingQuizItems.clear()
         remainingQuizItems.addAll(allQuizItems)
         score = 0
         quizAnswers.clear()
         isAnswered = false
+        isQuizDone = false
         loadNextQuestion()
         Log.d("QuizViewModel", "Starting new quiz.")
     }
@@ -64,6 +73,7 @@ class QuizViewModel(private val repository: QuizRepository) : ViewModel() {
     fun loadNextQuestion() {
         if (remainingQuizItems.isEmpty()) {
             Log.d("QuizViewModel", "No more questions to load.")
+            isQuizDone = true
             return
         }
         val nextQuestion = remainingQuizItems.random()
