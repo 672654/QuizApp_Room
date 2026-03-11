@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 fun QuizDone(
     onRestart: () -> Unit,
     score: Int,
+    maximumScorePossible: Int,
     onExit: () -> Unit,
     modifier: Modifier = Modifier
 ){
@@ -24,7 +25,7 @@ fun QuizDone(
             .padding(8.dp)
     ) {
         Text(
-            text = "You answered $score questions correctly",
+            text = "You answered $score out of $maximumScorePossible questions correctly",
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp, bottom = 16.dp),

@@ -5,7 +5,8 @@ import android.content.Intent
 import android.net.Uri
 import android.util.Log
 
-fun Context.takePersistableUriPermission(uri: Uri) {
+//extension function that can be used on all context objects to give permission to read the uri.
+fun Context.giveUriPermission(uri: Uri) {
     try {
         contentResolver.takePersistableUriPermission(
             uri,

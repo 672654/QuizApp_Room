@@ -29,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -48,6 +49,7 @@ fun QuizScreen(
     score: Int,
     notEnoughQuizItems: Boolean,
     isQuizDone: Boolean,
+    maximumScorePossible: Int,
     onRestart: () -> Unit,
     onNextQuestion: () -> Unit
     ) {
@@ -60,8 +62,10 @@ fun QuizScreen(
                 title = { Text(text = "Quiz") },
                 actions = {
                     Text(
-                        text = "Score: $score",
-                        modifier = Modifier.padding(8.dp)
+                        text = "Score: $score / $maximumScorePossible",
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .testTag("ScoreText")
                     )
                 }
 
@@ -82,6 +86,7 @@ fun QuizScreen(
             modifier = Modifier
                 .padding(paddingValues)
                 .verticalScroll(scrollState)
+                .testTag("QuizContent")
         ) {
             if (notEnoughQuizItems){
                 Text(
@@ -92,6 +97,7 @@ fun QuizScreen(
                     QuizDone(
                         onRestart = onRestart,
                         score = score,
+                        maximumScorePossible =  maximumScorePossible,
                         onExit = { navController.navigate("home") }
                     )
                 } else {
@@ -147,7 +153,8 @@ fun QuizCard(
                 Button(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(4.dp),
+                        .padding(4.dp)
+                        .testTag(if (answer == quizItem.answer) "CorrectAnswer" else "WrongAnswer"),
                     enabled = !isAnswered,
                     onClick = {
                         onSubmitAnswer(answer)
@@ -188,6 +195,7 @@ fun QuizCard(
                         .padding(4.dp)
                         .align(alignment = Alignment.CenterHorizontally)
                         .fillMaxWidth()
+                        .testTag("NextQuestionButton")
                 ) {
                     Text(text = "Next Question")
                 }

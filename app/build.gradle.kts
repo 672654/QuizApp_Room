@@ -70,4 +70,8 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+    //testing
+    androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.0")
+    androidTestImplementation("androidx.navigation:navigation-testing:2.8.0")
 }

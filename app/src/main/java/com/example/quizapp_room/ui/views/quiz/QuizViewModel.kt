@@ -26,6 +26,7 @@ class QuizViewModel(private val repository: QuizRepository) : ViewModel() {
 
     var isQuizDone by mutableStateOf(false)
 
+    var maximumScorePossible by mutableStateOf(0)
 
     var isAnswered by mutableStateOf(false)
 
@@ -42,6 +43,11 @@ class QuizViewModel(private val repository: QuizRepository) : ViewModel() {
         loadData()
     }
 
+    /**
+     * Load all quiz items from the database.
+     * Use [collect] to automatically update the UI when the database changes.
+     * This means the quiz will restart if quiz items are added/deleted from database.
+     */
     private fun loadData() {
         viewModelScope.launch {
             repository.getAllQuizItems().collect() {
@@ -66,6 +72,7 @@ class QuizViewModel(private val repository: QuizRepository) : ViewModel() {
         quizAnswers.clear()
         isAnswered = false
         isQuizDone = false
+        maximumScorePossible = remainingQuizItems.size
         loadNextQuestion()
         Log.d("QuizViewModel", "Starting new quiz.")
     }

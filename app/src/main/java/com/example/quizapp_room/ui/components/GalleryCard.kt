@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -29,6 +30,7 @@ fun GalleryCard(
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth()
+            .testTag("GalleryCard")
     ) {
         if(!quizItem.imageUri.isNullOrBlank() || quizItem.imageRes != null) {
             AsyncImage(
@@ -43,11 +45,12 @@ fun GalleryCard(
         Text(
             modifier = Modifier
                 .padding(8.dp),
-            text = quizItem.answer + " ID:"+ quizItem.id.toString(),
+            text = quizItem.answer,
             fontSize =24.sp
         )
         IconButton(
             modifier = Modifier
+                .testTag("DeleteQuizItemButton")
                 .padding(4.dp)
                 .align(alignment = Alignment.CenterHorizontally),
             onClick = { onDeleteButtonClick(quizItem) }

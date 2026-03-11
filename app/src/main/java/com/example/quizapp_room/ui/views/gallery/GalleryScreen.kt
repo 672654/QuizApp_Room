@@ -28,8 +28,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
-import androidx.navigation.ActivityNavigatorExtras
-import com.example.quizapp_room.utils.takePersistableUriPermission
+import androidx.compose.ui.platform.testTag
+import com.example.quizapp_room.utils.giveUriPermission
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -76,6 +77,7 @@ fun GalleryScreen(
         },
         floatingActionButton ={
             FloatingActionButton(
+                modifier = Modifier.testTag("PickImageButton"),
                 onClick = {
                     pickImageLauncher.launch(
                     PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
@@ -89,7 +91,8 @@ fun GalleryScreen(
     paddingValues ->
         LazyColumn(
             modifier = Modifier
-                .padding(paddingValues),
+                .padding(paddingValues)
+                .testTag("GalleryContent"),
             contentPadding = paddingValues
         ) {
             items(quizItems) { quizItem ->
@@ -115,16 +118,20 @@ fun GalleryScreen(
                 TextField(
                     value = quizItemName,
                     onValueChange = { quizItemName = it },
-                    singleLine = true
+                    singleLine = true,
+                    modifier = Modifier.testTag("QuizItemNameText")
                 )
             },
             confirmButton = {
                 Button(
+                    modifier = Modifier.testTag("AddQuizItemButton"),
                     onClick = {
                         selectedImageUri?.let { uri ->
 
                             //Use UriUtil function to give permission.
-                            context.takePersistableUriPermission(uri)
+                            if(uri.scheme == "content") {
+                                context.giveUriPermission(uri)
+                            }
 
                             val newItem = QuizItem(
                                 id = 0,

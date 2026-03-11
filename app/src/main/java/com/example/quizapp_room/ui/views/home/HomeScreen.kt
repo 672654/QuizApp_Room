@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.quizapp_room.ui.components.NavigateButton
@@ -20,7 +21,15 @@ fun HomeScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterVertically)
     ) {
-        NavigateButton(text = "Start Quiz", onClick = { navController.navigate("quiz") })
-        NavigateButton(text = "To Gallery", onClick = { navController.navigate("gallery") })
+        NavigateButton(
+            modifier = Modifier.testTag("startQuizButton"),
+            text = "Start Quiz",
+            onClick = { navController.navigate("quiz") }
+        )
+        NavigateButton(
+            modifier = Modifier.testTag("toGalleryButton"),
+            text = "To Gallery",
+            onClick = { navController.navigate("gallery") }
+        )
     }
 }

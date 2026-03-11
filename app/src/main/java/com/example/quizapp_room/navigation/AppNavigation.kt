@@ -46,6 +46,7 @@ fun AppNavigation() {
                 score = quizViewModel.score,
                 notEnoughQuizItems = quizViewModel.notEnoughQuizItems,
                 isQuizDone = quizViewModel.isQuizDone,
+                maximumScorePossible = quizViewModel.maximumScorePossible,
                 onRestart = { quizViewModel.startNewQuiz() },
                 onNextQuestion = {quizViewModel.loadNextQuestion()}
             )
