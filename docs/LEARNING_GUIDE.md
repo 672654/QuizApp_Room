@@ -34,15 +34,20 @@ En klasse mellom datakildene (Room, API) og ViewModellen. Den bestemmer hvor dat
 
 ---
 
-## Jetpack Compose UI
+## State in ui
 
 ### Remember
 Gjør at en variabel huskes selv om skjermen tegnes på nytt (recomposition). Kan kun brukes i @Composable.
+Men overlever ikke hvis en activity blir laget på nytt (skjermrotasjon)
+
+### RememberSaveable
+Lagrer verdien i en bundle som blir tatt vare på selv om aktiviteten blir leget på nytt.
 
 ### By (Delegation)
 Et nøkkelord for å slippe å skrive `.value` hele tiden når du jobber med `State`. Det gjør at koden ser ut som vanlige variabler, selv om Compose følger med på dem i bakgrunnen.
 
 ---
+
 
 ## Data & System
 

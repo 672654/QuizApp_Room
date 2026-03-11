@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -121,9 +122,10 @@ fun QuizCard(
     onNextQuestion: () -> Unit
 ){
 
-    // if I rotate phone, it will trigger recomposistion and this value will be lost.
-    // use viewmodel instead
-    var yourAnswer by remember { mutableStateOf("") }
+    // Use remember if ok to lose value when activity is restartet.
+    // Use remeberSaveable if not. Save to bundle instead.
+    // Consider using ViewModel for this.
+    var yourAnswer by rememberSaveable() { mutableStateOf("") }
 
     Card(
         modifier = Modifier
