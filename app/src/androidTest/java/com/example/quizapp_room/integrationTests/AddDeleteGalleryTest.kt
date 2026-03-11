@@ -1,21 +1,29 @@
-package com.example.quizapp_room
+package com.example.quizapp_room.integrationTests
 
 import android.app.Activity
 import android.app.Instrumentation
 import android.content.Intent
 import android.net.Uri
-import android.provider.MediaStore
-import androidx.compose.ui.test.*
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasAnySibling
+import androidx.compose.ui.test.hasTestTag
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollToNode
+import androidx.compose.ui.test.performTextInput
 import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.intent.Intents.intending
-import androidx.test.espresso.intent.matcher.IntentMatchers.anyIntent
+import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.platform.app.InstrumentationRegistry
+import com.example.quizapp_room.MainActivity
+import com.example.quizapp_room.QuizApplication
 import com.example.quizapp_room.data.QuizRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After
-import org.junit.Assert.assertEquals
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -48,7 +56,7 @@ class AddDeleteGalleryTest {
         val initCount = countQuizItems()
 
         // Intent stubbing: Bruker anyIntent() for å være sikker på å fange bildevelgeren. sender kun en intent uansatt, så ok.
-        intending(anyIntent()).respondWith(getIntentStub())
+        Intents.intending(IntentMatchers.anyIntent()).respondWith(getIntentStub())
 
         // Klikk på Legg til-knappen. Legg til knappen starter en intent, og dermed plukkes stub-intentet opp, i stedet for det ekte intentet.
         composeTestRule.onNodeWithTag("PickImageButton").performClick()
@@ -64,7 +72,11 @@ class AddDeleteGalleryTest {
 
         // Sjekk at databasen nå har ett element mer
         val finalCount = countQuizItems()
-        assertEquals("Antall elementer i databasen skal ha økt med 1", initCount + 1, finalCount)
+        Assert.assertEquals(
+            "Antall elementer i databasen skal ha økt med 1",
+            initCount + 1,
+            finalCount
+        )
 
         // Scroll til det nye elementet og sjekk at det vises
         composeTestRule.onNodeWithTag("GalleryContent").performScrollToNode(hasText("TestPanda"))
@@ -81,7 +93,7 @@ class AddDeleteGalleryTest {
 
         // Hvis listen er tom, legger vi til et element først slik at testen har noe å slette
         if (items.isEmpty()) {
-            intending(anyIntent()).respondWith(getIntentStub())
+            Intents.intending(IntentMatchers.anyIntent()).respondWith(getIntentStub())
             composeTestRule.onNodeWithTag("PickImageButton").performClick()
             composeTestRule.onNodeWithTag("QuizItemNameText").performTextInput("SlettMegPanda")
             composeTestRule.onNodeWithTag("AddQuizItemButton").performClick()
@@ -110,9 +122,13 @@ class AddDeleteGalleryTest {
         composeTestRule.waitUntil(5000) {
             countQuizItems() == initCount - 1
         }
-        
+
         val finalCount = countQuizItems()
-        assertEquals("Antall elementer i databasen skal ha sunket med 1", initCount - 1, finalCount)
+        Assert.assertEquals(
+            "Antall elementer i databasen skal ha sunket med 1",
+            initCount - 1,
+            finalCount
+        )
 
         // 6. Bekreft at elementet er borte fra UI
         composeTestRule.onNodeWithText(itemToDelete.answer).assertDoesNotExist()

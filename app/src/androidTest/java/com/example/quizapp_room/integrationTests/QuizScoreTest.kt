@@ -1,11 +1,11 @@
-package com.example.quizapp_room
+package com.example.quizapp_room.integrationTests
 
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
-import androidx.compose.ui.test.onChildAt
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
+import com.example.quizapp_room.MainActivity
 import org.junit.Rule
 import org.junit.Test
 
