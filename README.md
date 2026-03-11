@@ -1,6 +1,7 @@
 # QuizApp Room
 
 QuizApp Room is an Android application designed to test your knowledge of images and names. The app allows users to participate in a quiz, manage a gallery of images (including adding and deleting items), and persists data locally.
+See docs/LEARNING_GUIDE.md for info on concepts in andorid dev.
 
 ## Features
 *   **Quiz Mode:** Test yourself by matching images with the correct names.
