@@ -22,6 +22,7 @@ import com.example.quizapp_room.ui.views.quiz.QuizViewModelFactory
 @Composable
 fun AppNavigation() {
 
+    //get repo from application class thru localcontext (access to android system)
     val repository = (LocalContext.current.applicationContext as QuizApplication).repository
 
     val navController = rememberNavController()

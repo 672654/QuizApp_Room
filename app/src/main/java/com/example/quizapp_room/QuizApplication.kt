@@ -6,9 +6,10 @@ import com.example.quizapp_room.data.QuizRepository
 
 /**
  * this is Application class.
- * first one to be created when the app starts
+ * first one to be created when the app starts. created by android system.
  * last one to close when the app closes
- * we use this to create the database and the repository
+ * we use this to create the database and the repository (global state)
+ * use with LocalContext.current.applicationContext as QuizApplication
  * all other classes can then use the database and the repository
  */
 
