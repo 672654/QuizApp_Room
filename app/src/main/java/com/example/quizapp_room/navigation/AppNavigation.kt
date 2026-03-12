@@ -9,6 +9,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.example.quizapp_room.QuizApplication
 import com.example.quizapp_room.ui.views.gallery.GalleryViewModel
@@ -37,6 +38,8 @@ fun AppNavigation() {
             HomeScreen(navController = navController)
         }
 
+        //Consider creating a QuizUiState data class to contain all the states needed in QuizScreen
+        //instead of sending so many parameters.
         composable("quiz") {
             QuizScreen(
                 navController = navController,
