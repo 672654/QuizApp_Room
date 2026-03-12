@@ -5,6 +5,9 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.net.Uri
 
+/**
+ * QuizContentProvider translates queries from Androids contentresolver to Room.
+ */
 class QuizContentProvider: ContentProvider() {
 
 

@@ -52,8 +52,17 @@ Organization:
 The ContentProvider can be tested using the following command. 
 Note: If `adb` is not in your system PATH, you need to provide the full path to the executable.
 
+
+1. run app on emulator.
+2. open terminal in android studio
+3. run bash or bash with full path
+
 ```bash
 adb shell content query --uri content://com.example.quizapp_room.data.QuizContentProvider
+```
+
+```bash full path example
+& "C:\Users\henri\AppData\Local\Android\Sdk\platform-tools\adb.exe" shell content query --uri content://com.example.quizapp_room.data.QuizContentProvider
 ```
 
 **Example Output:**

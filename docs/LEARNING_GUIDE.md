@@ -1,5 +1,4 @@
 
-
 ---
 
 ## Kotlin & Coroutines
@@ -52,7 +51,17 @@ Et nøkkelord for å slippe å skrive `.value` hele tiden når du jobber med `St
 ## Data & System
 
 ### Context
-Appens "ID-kort" eller bindeledd til Android-systemet. Trengs for å få tilgang til databasen, filer, ressurser (som bilder) eller systemtjenester.
+Appens "ID-kort" eller bindeledd til Android-systemet. Brukes for å få tilgang til systemet (f.eks. databasen eller ressurser).
+
+### Intent
+En "beskjed" eller "bestilling" til Android-systemet. Brukes for å starte noe (f.eks. en ny skjerm eller åpne bildegalleriet).
+
+### Bundle
+En "konvolutt" eller "ryggsekk" med data. Den lagrer små mengder informasjon (som tekst eller tall) som nøkkel-verdi-par. Brukes av `RememberSaveable` for å ta vare på data, eller for å sende små datapakker mellom skjermer.
+
+### Forskjellen på Context og Intent
+*   **Context:** Handler om **hvem/hvor** du er (adgangskortet ditt).
+*   **Intent:** Handler om **hva** du vil gjøre (bestillingsseddelen din).
 
 ### Room (DAO & Entity)
 *   **Entity:** Selve tingen vi lagrer i en tabell (f.eks. et `QuizItem`).
