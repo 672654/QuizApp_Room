@@ -9,6 +9,7 @@ import androidx.compose.ui.test.hasAnySibling
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -114,9 +115,9 @@ class AddDeleteGalleryTest {
             .performScrollToNode(hasText(itemToDelete.answer))
 
         // Klikk på sletteknappen tilhørende elementet som skal slettes.
-        composeTestRule.onNode(
+        composeTestRule.onAllNodes(
             hasTestTag("DeleteQuizItemButton") and hasAnySibling(hasText(itemToDelete.answer))
-        ).performClick()
+        ).onFirst().performClick()
 
         // 5. Verifiser at antallet i databasen har sunket med waitUntil()
         composeTestRule.waitUntil(5000) {

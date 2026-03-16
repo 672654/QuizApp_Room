@@ -26,6 +26,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
@@ -44,7 +45,7 @@ fun GalleryScreen(
     val context = LocalContext.current
 
     var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
-    var showNameDialog by remember { mutableStateOf(false) }
+    var showNameDialog by rememberSaveable() { mutableStateOf(false) }
     var quizItemName by remember { mutableStateOf("") }
 
     var sortAscending by remember { mutableStateOf(true) }

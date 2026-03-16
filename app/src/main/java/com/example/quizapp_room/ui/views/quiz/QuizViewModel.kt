@@ -17,7 +17,21 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
+data class QuizUiState(
+    val currentsQuizItem: QuizItem? = null,
+    val quizAnswers: List<String> = emptyList(),
+    val isAnswered: Boolean = false,
+    val score: Int = 0,
+    val notEnoughQuizItems: Boolean = false,
+    val isQuizDone: Boolean = false,
+    val maximumScorePossible: Int = 0
+)
+
 class QuizViewModel(private val repository: QuizRepository) : ViewModel() {
+
+    // Make use of the data class to pass as parameter to composable = less coding.
+    // private val _uiState = MutableStateFlow(QuizUiState())
+    // val uiState: StateFlow<QuizUiState> = _uiState.asStateFlow()
 
     private val allQuizItems = mutableStateListOf<QuizItem>()
     private val remainingQuizItems = mutableStateListOf<QuizItem>()

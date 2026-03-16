@@ -41,6 +41,7 @@ fun AppNavigation() {
         //Consider creating a QuizUiState data class to contain all the states needed in QuizScreen
         //instead of sending so many parameters.
         composable("quiz") {
+
             QuizScreen(
                 navController = navController,
                 quizAnswers = quizViewModel.quizAnswers,

@@ -15,4 +15,8 @@ class QuizRepository(private val quizDao: QuizDao) {
     suspend fun deleteQuizItem(id: Int) {
         quizDao.deleteQuizItem(id)
     }
+
+    suspend fun deleteAllQuizItems() {
+        quizDao.deleteAllQuizItems()
+    }
 }

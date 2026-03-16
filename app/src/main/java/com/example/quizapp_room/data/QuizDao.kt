@@ -20,6 +20,9 @@ interface QuizDao {
     @Query("DELETE FROM quiz_items WHERE id = :id")
     suspend fun deleteQuizItem(id: Int)
 
+    @Query("DELETE FROM quiz_items")
+    suspend fun deleteAllQuizItems()
+
 
 
     @Query("""
