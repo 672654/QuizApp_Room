@@ -95,6 +95,14 @@ These tests target individual UI components in isolation to verify their logic a
 *   **Class/Method:** `QuizScreenTest.kt` -> `testScoreUpdatesOnCorrectAndWrongAnswer()`
 *   **Status:** **PASSED**
 
+#### 3. Gallery Management (Add/Delete)
+*   **Description:** Verifies that adding and deleting items in the `GalleryScreen` updates the internal state and UI correctly. It uses Intent Stubbing to simulate image selection without user interaction.
+*   **Expected Result:** 
+    1. Adding an item increases the count and displays the new item in the list.
+    2. Deleting an item decreases the count and removes the item from the UI.
+*   **Class/Method:** `AddDeleteTest.kt` -> `testAdd()`, `testDelete()`
+*   **Status:** **PASSED**
+
 ---
 
 ### Integration Tests
