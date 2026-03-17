@@ -68,6 +68,8 @@ class AddDeleteTest {
         val initCount = quizItems.size
         println("initCount: $initCount")
 
+
+
         // Intent stubbing = Return "fake" resource when the intent is started.
         Intents.intending(IntentMatchers.anyIntent()).respondWith(getIntentStub())
 

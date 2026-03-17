@@ -44,9 +44,9 @@ fun GalleryScreen(
 ){
     val context = LocalContext.current
 
-    var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
+    var selectedImageUri by rememberSaveable() { mutableStateOf<Uri?>(null) }
     var showNameDialog by rememberSaveable() { mutableStateOf(false) }
-    var quizItemName by remember { mutableStateOf("") }
+    var quizItemName by rememberSaveable() { mutableStateOf("") }
 
     var sortAscending by remember { mutableStateOf(true) }
 
