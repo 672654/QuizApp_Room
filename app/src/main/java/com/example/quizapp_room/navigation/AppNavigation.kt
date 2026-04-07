@@ -2,6 +2,7 @@ package com.example.quizapp_room.navigation
 
 import android.util.Log
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalGraphicsContext
@@ -19,17 +20,20 @@ import com.example.quizapp_room.ui.views.home.HomeScreen
 import com.example.quizapp_room.ui.views.quiz.QuizScreen
 import com.example.quizapp_room.ui.views.quiz.QuizViewModel
 import com.example.quizapp_room.ui.views.quiz.QuizViewModelFactory
+import com.example.quizapp_room.ui.views.scoreBoard.ScoreBoardScreen
 
 @Composable
 fun AppNavigation() {
 
     //get repo from application class thru localcontext (access to android system)
     val repository = (LocalContext.current.applicationContext as QuizApplication).repository
+    val scoreRepository = com.example.quizapp_room.data.score.ScoreRepository()
+
 
     val navController = rememberNavController()
 
     val quizViewModel: QuizViewModel = viewModel(
-        factory = QuizViewModelFactory(repository)
+        factory = QuizViewModelFactory(repository, scoreRepository)
     )
 
     NavHost(navController = navController, startDestination = "home") {
@@ -69,6 +73,16 @@ fun AppNavigation() {
                 onSortButtonClick = {galleryViewModel.sortAscending(it)},
                 onDeleteButtonClick = {galleryViewModel.deleteQuizItem(it.id)}
                 )
+        }
+        composable(route = "scoreBoard") {
+            LaunchedEffect(Unit) {
+                quizViewModel.getScores()
+            }
+
+            ScoreBoardScreen(
+                navController = navController,
+                scores = quizViewModel.scoreBoard
+            )
         }
     }
 }

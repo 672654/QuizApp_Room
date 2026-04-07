@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.quizapp_room.data.QuizItem
 import com.example.quizapp_room.data.QuizRepository
+import com.example.quizapp_room.data.score.Score
+import com.example.quizapp_room.data.score.ScoreRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -27,7 +29,10 @@ data class QuizUiState(
     val maximumScorePossible: Int = 0
 )
 
-class QuizViewModel(private val repository: QuizRepository) : ViewModel() {
+class QuizViewModel(
+    private val repository: QuizRepository,
+    private val scoreRepository: ScoreRepository
+) : ViewModel() {
 
     // Make use of the data class to pass as parameter to composable = less coding.
     // private val _uiState = MutableStateFlow(QuizUiState())
@@ -50,6 +55,8 @@ class QuizViewModel(private val repository: QuizRepository) : ViewModel() {
     val currentQuizItem: StateFlow<QuizItem?> = _currentQuizItem.asStateFlow()
 
     var score by mutableStateOf(0)
+
+     var scoreBoard = mutableStateListOf<Score>()
 
 
 
@@ -95,6 +102,9 @@ class QuizViewModel(private val repository: QuizRepository) : ViewModel() {
         if (remainingQuizItems.isEmpty()) {
             Log.d("QuizViewModel", "No more questions to load.")
             isQuizDone = true
+            viewModelScope.launch {
+                scoreRepository.saveScore("Player", score)
+            }
             return
         }
         val nextQuestion = remainingQuizItems.random()
@@ -130,14 +140,25 @@ class QuizViewModel(private val repository: QuizRepository) : ViewModel() {
         }
 
 
+
+
+    }
+
+    fun getScores() {
+        viewModelScope.launch {
+            val result = scoreRepository.getScores()
+            scoreBoard.clear()
+            scoreBoard.addAll(result)
+        }
+
     }
 }
 
-class QuizViewModelFactory(private val repository: QuizRepository) : ViewModelProvider.Factory {
+class QuizViewModelFactory(private val repository: QuizRepository, private val scoreRepository: ScoreRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(QuizViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return QuizViewModel(repository) as T
+            return QuizViewModel(repository, scoreRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

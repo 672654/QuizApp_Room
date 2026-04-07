@@ -31,5 +31,9 @@ fun HomeScreen(navController: NavController) {
             text = "To Gallery",
             onClick = { navController.navigate("gallery") }
         )
+        NavigateButton(
+            text = "Scoreboard",
+            onClick = { navController.navigate("scoreBoard") }
+        )
     }
 }
