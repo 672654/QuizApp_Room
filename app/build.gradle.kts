@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
+
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -74,4 +76,8 @@ dependencies {
     //testing
     androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.0")
     androidTestImplementation("androidx.navigation:navigation-testing:2.8.0")
+
+    implementation(platform("com.google.firebase:firebase-bom:34.11.0"))
+    implementation("com.google.firebase:firebase-analytics")
+
 }
